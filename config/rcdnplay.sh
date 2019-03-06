@@ -10,3 +10,7 @@ export OS_PROJECT_NAME="${4:-CoDE-Playground}"
 export OS_PROJECT_DOMAIN_NAME="cisco"
 export OS_USERNAME="anasharm"
 export OS_USER_DOMAIN_NAME="cisco"
+
+echo "Using the following OpenStack settings..."
+echo "OS_AUTH_URL=${OS_AUTH_URL}"
+echo "OS_PROJECT_NAME=${OS_PROJECT_NAME}"
