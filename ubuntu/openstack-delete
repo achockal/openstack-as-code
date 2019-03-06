@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Override these values by passing command-line params
+REGION="${1:-rtppoc}"
+INSTANCE_NAME="${2:-bastion}"
+echo "Running against Region \"${REGION}\" and using the prefix \"${INSTANCE_NAME}\"..."
+
+if [ ! -f ../config/${REGION}.sh ]; then
+    # Oops, something went wrong
+    echo "The value provided for REGION (${REGION}) is invalid!"
+    exit 25
+fi
+source ../config/${REGION}.sh
+
+# Delete an instance
+openstack server delete ${INSTANCE_NAME}

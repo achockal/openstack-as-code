@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Override these values by passing command-line params
+REGION="${1:-rtppoc}"
+INSTANCE_NAME="${2:-bastion}"
+STARTUP_SCRIPT="${3:-bastion}"
+
+echo "Running against Region: \"${REGION}\", Instance Name: \"${INSTANCE_NAME}\", Instance Type: \"${STARTUP_SCRIPT}\", OpenStack Project: \"${4}\".."
+
+if [ ! -f ../config/${REGION}.sh ]; then
+    # Oops, something went wrong
+    echo "The value provided for REGION (${REGION}) is invalid!"
+    exit 25
+fi
+source ../config/${REGION}.sh
+
+# Create an instance
+openstack server create --flavor $FLAVOR_NAME --image $IMAGE_NAME --nic $NETWORK_ID \
+    --security-group default --key-name "$SSH_KEY" \
+    --user-data ./${STARTUP_SCRIPT}.sh ${INSTANCE_NAME}
